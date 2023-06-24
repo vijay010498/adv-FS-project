@@ -1,0 +1,48 @@
+main {
+  margin-top: 80px;
+  padding: 20px 1rem;
+  min-height: calc(100vh - 130px);
+}
+
+.form-label.required:after {
+  content: " *";
+  color: red;
+}
+
+footer {
+  color: #ffffff;
+  height: 50px;
+}
+h1{
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 15px;
+  padding: 10px;
+}
+
+#search-btn{
+  width:40%;
+  margin: 0px auto;
+}
+
+#nav-color{
+  background-color: black;
+}
+
+#btn-bg-color{
+  background-color: #3f474f;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+#bg-color-table{
+background: #b9b0b0;
+  border: none;
+}
+.th-font{
+  font-weight: bold;
+}
+
+#head-bg-color{
+  background-color: #78848f;
+}

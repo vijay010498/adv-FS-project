@@ -1,11 +1,14 @@
-import { PAGES } from "../enum";
-function Header({ currentPage, changePage }) {
-  const onMenuClick = (value) => {
-    changePage(value);
-  };
+// Header.js
+
+import { Link, useLocation } from "react-router-dom";
+
+
+function Header() {
+  const location = useLocation();
+
   return (
     <header id="nav-color" className="fixed-top">
-      <nav  className="navbar navbar-expand-lg navbar-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container-fluid">
           <span className="navbar-brand">
             <h3>Employee Management System</h3>
@@ -24,28 +27,28 @@ function Header({ currentPage, changePage }) {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <span
+                <Link
+                  to="/"
                   className={
-                    currentPage === PAGES.EMPLOYEE_LIST
+                    location.pathname === "/"
                       ? "nav-link active"
                       : "nav-link"
                   }
-                  onClick={() => onMenuClick(PAGES.EMPLOYEE_LIST)}
                 >
                   Employees
-                </span>
+                </Link>
               </li>
               <li className="nav-item">
-                <span
+                <Link
+                  to="/add-employee"
                   className={
-                    currentPage === PAGES.ADD_EMPLOYEE
+                    location.pathname === "/add-employee"
                       ? "nav-link active"
                       : "nav-link"
                   }
-                  onClick={() => onMenuClick(PAGES.ADD_EMPLOYEE)}
                 >
                   Add Employee
-                </span>
+                </Link>
               </li>
             </ul>
           </div>

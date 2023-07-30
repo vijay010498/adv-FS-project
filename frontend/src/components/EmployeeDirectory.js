@@ -1,19 +1,13 @@
-import EmployeeCreate from "./EmployeCreate";
 import EmployeeSearch from "./EmployeeSearch";
 import EmployeeTable from "./EmployeeTable";
-import { PAGES } from "../enum";
 
-function EmployeeDirectory({ currentPage }) {
+
+function EmployeeDirectory() {
   return (
     <main>
-      {currentPage === PAGES.EMPLOYEE_LIST && (
-        <>
-          <h1>EMPLOYEE LIST</h1>
-          <EmployeeSearch />
-          <EmployeeTable />
-        </>
-      )}
-      {currentPage === PAGES.ADD_EMPLOYEE && <EmployeeCreate />}
+      <h1>EMPLOYEE LIST</h1>
+      <EmployeeSearch />
+      <EmployeeTable />
     </main>
   );
 }

@@ -16,3 +16,19 @@ export const GET_EMPLOYEE_LIST_QUERY = gql`
         }
     }
 `;
+
+export const GET_EMPLOYEE_BY_ID = gql`
+    query Employee($id: ID!) {
+        employee(id: $id) {
+            id
+            firstName
+            lastName
+            age
+            dateOfJoining
+            title
+            department
+            employeeType
+            currentStatus
+        }
+    }
+`;

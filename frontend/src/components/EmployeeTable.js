@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react";
 import {useQuery} from "@apollo/client";
 import {GET_EMPLOYEE_LIST_QUERY} from "../GraphQL/Queries";
 
-function EmployeeTable() {
-  const {data} = useQuery(GET_EMPLOYEE_LIST_QUERY);
+function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated}) {
+  let {data, refetch} = useQuery(GET_EMPLOYEE_LIST_QUERY);
+
 
   const [employeeList, setEmployeeList] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -13,6 +14,16 @@ function EmployeeTable() {
       setEmployeeList(data.employees);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (newEmployeeCreated) {
+      console.log("data-refetched", newEmployeeCreated);
+      // Refetch data
+      refetch().then(() => {
+        onResetNewEmployeeCreated();
+      });
+    }
+  }, [newEmployeeCreated, refetch, onResetNewEmployeeCreated]);
 
   const handleEmployeeClick = (employee) => {
     setSelectedEmployee(employee);
@@ -62,13 +73,14 @@ function EmployeeTable() {
         <tbody>{rows}</tbody>
       </table>
 
-    }
+      }
       {selectedEmployee && (
         <div className="modal" tabIndex="-1" role="dialog" style={{display: "block"}}>
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">{`${selectedEmployee.firstName.toUpperCase()} ${selectedEmployee.lastName.toUpperCase()}`}</h5>
+                <h5
+                  className="modal-title">{`${selectedEmployee.firstName.toUpperCase()} ${selectedEmployee.lastName.toUpperCase()}`}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={closeModal}>
                   <span aria-hidden="true">&times;</span>
                 </button>

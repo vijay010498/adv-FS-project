@@ -1,8 +1,10 @@
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
-import { CREATE_EMPLOYEE_MUTATION } from "../GraphQL/Mutators";
+import {useMutation} from "@apollo/client";
+import React, {useState} from "react";
+import {CREATE_EMPLOYEE_MUTATION} from "../GraphQL/Mutators";
+import {useNavigate} from "react-router-dom"
 
 function EmployeeCreate() {
+  const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -13,8 +15,8 @@ function EmployeeCreate() {
   const [department, setDepartment] = useState("");
   const [employeeType, setEmployeeType] = useState("");
   const [currentStatus, setCurrentStatus] = useState("");
- 
-  const [createEmployee, { error }] = useMutation(CREATE_EMPLOYEE_MUTATION);
+
+  const [createEmployee, {error}] = useMutation(CREATE_EMPLOYEE_MUTATION);
 
   const addEmployee = () => {
     const formErrors = {
@@ -25,11 +27,11 @@ function EmployeeCreate() {
       title: !title,
       department: !department,
       employeeType: !employeeType,
-     
+
     };
 
     setIsSuccess(false);
-    setFormErrors({ ...formErrors });
+    setFormErrors({...formErrors});
 
     if (Object.values(formErrors).some((v) => v)) return;
 
@@ -43,7 +45,7 @@ function EmployeeCreate() {
           title,
           department,
           employeeType,
-         
+
         },
       },
     });
@@ -59,7 +61,13 @@ function EmployeeCreate() {
       setTitle("");
       setDepartment("");
       setEmployeeType("");
-     
+
+      // navigate to main router and refresh the employee list
+      navigate("/", {
+        state: {
+          newEmployeeCreated: true
+        }
+      });
     }
   };
   return (
@@ -189,7 +197,7 @@ function EmployeeCreate() {
               setDepartment(e.currentTarget.value);
             }}
           >
-          <option value="">Select Department</option>
+            <option value="">Select Department</option>
             <option value="IT">IT</option>
             <option value="Marketing">Marketing</option>
             <option value="HR">HR</option>
@@ -222,10 +230,8 @@ function EmployeeCreate() {
           </select>
           <div className="invalid-feedback">Please enter Employee Type</div>
         </div>
-       
-        
-       
-       
+
+
         <div className="mb-3">
           <button
             type="button"

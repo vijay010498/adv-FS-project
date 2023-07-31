@@ -2,8 +2,13 @@ import React, {useState, useEffect} from "react";
 import {useQuery} from "@apollo/client";
 import {GET_EMPLOYEE_LIST_QUERY} from "../GraphQL/Queries";
 
-function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated}) {
-  let {data, refetch} = useQuery(GET_EMPLOYEE_LIST_QUERY);
+function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOptions}) {
+  console.log("EmployeeTable.js", filterOptions);
+  let {data, refetch} = useQuery(GET_EMPLOYEE_LIST_QUERY, {
+    variables: {
+      filterOptions
+    }
+  });
 
 
   const [employeeList, setEmployeeList] = useState([]);
@@ -17,13 +22,22 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated}) {
 
   useEffect(() => {
     if (newEmployeeCreated) {
-      console.log("data-refetched", newEmployeeCreated);
       // Refetch data
       refetch().then(() => {
         onResetNewEmployeeCreated();
       });
     }
   }, [newEmployeeCreated, refetch, onResetNewEmployeeCreated]);
+
+
+  useEffect(() => {
+    refetch({filterOptions}).then(({data, error}) => {
+      console.log("refetch-filteroptions", data);
+      if (data) {
+        setEmployeeList(data.employees);
+      }
+    })
+  }, [filterOptions, refetch, data]);
 
   const handleEmployeeClick = (employee) => {
     setSelectedEmployee(employee);
@@ -44,7 +58,7 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated}) {
           <td>{employee.title}</td>
           <td>{employee.department}</td>
           <td>{employee.employeeType}</td>
-          <td>{employee.currentStatus}</td>
+          <td>{employee.currentStatus === 1 ? "working" : "retired"}</td>
         </tr>
       ))
     ) : (

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_EMPLOYEE_LIST_QUERY = gql`
-    query Query {
-        employees {
+    query GetEmployees($filterOptions: EmployeeInput) {
+        employees(filterOptions: $filterOptions) {
             id
             firstName
             lastName

@@ -16,7 +16,7 @@ const typeDefs = gql `
     }
 
     type Query {
-        employees: [Employee]
+        employees(filterOptions: EmployeeInput): [Employee]
         employee(id: ID): Employee
     }
 

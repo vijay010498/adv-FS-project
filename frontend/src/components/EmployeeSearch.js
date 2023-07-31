@@ -1,4 +1,15 @@
-function EmployeeSearch() {
+import {useState} from "react";
+
+function EmployeeSearch({onSearch}) {
+  const [employeeType, setEmployeeType] = useState("");
+
+
+  const handleSearchClick = () => {
+    onSearch({
+      employeeType
+    })
+  }
+
   return (
     <form className="form-horizontal mt-3">
       <div className="row">
@@ -18,7 +29,7 @@ function EmployeeSearch() {
           <label className="form-label" htmlFor="dateofjoining">
             Date Of Joining
           </label>
-          <input type="date" className="form-control" id="dateofjoining" />
+          <input type="date" className="form-control" id="dateofjoining"/>
         </div>
         <div className="col-3">
           <label className="form-label" htmlFor="currentstatus">
@@ -29,9 +40,25 @@ function EmployeeSearch() {
             <option value="0">Retired</option>
           </select>
         </div>
-        <div id ="search-btn" className="col-4">
+        <div className="col-3">
+          <label className="form-label" htmlFor="employeeType">
+            Employee Type
+          </label>
+          <select className="form-select" value={employeeType} onChange={(e) => setEmployeeType(e.target.value)}>
+            <option value="">ALL</option>
+            <option value="FullTime">FullTime</option>
+            <option value="PartTime">PartTime</option>
+            <option value="Contract">Contract</option>
+            <option value="Seasonal">Seasonal</option>
+          </select>
+        </div>
+        <div id="search-btn" className="col-4">
           <label className="form-label">&nbsp;</label>
-          <button id="btn-bg-color" type="button" className="btn btn-primary form-control">
+          <button id="btn-bg-color"
+                  type="button"
+                  className="btn btn-primary form-control"
+                  onClick={handleSearchClick}
+          >
             Search
           </button>
         </div>

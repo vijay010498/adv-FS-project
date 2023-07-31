@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {useQuery} from "@apollo/client";
 import {GET_EMPLOYEE_LIST_QUERY} from "../GraphQL/Queries";
+import {useNavigate} from "react-router-dom";
 
 function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOptions}) {
-  console.log("EmployeeTable.js", filterOptions);
+
+  const navigate = useNavigate();
   let {data, refetch} = useQuery(GET_EMPLOYEE_LIST_QUERY, {
     variables: {
       filterOptions
@@ -12,7 +14,6 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOpt
 
 
   const [employeeList, setEmployeeList] = useState([]);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -40,12 +41,9 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOpt
   }, [filterOptions, refetch, data]);
 
   const handleEmployeeClick = (employee) => {
-    setSelectedEmployee(employee);
+    navigate(`/employee/${employee.id}`);
   };
 
-  const closeModal = () => {
-    setSelectedEmployee(null);
-  };
 
   const rows =
     employeeList.length > 0 ? (
@@ -86,31 +84,6 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOpt
         </thead>
         <tbody>{rows}</tbody>
       </table>
-
-      }
-      {selectedEmployee && (
-        <div className="modal" tabIndex="-1" role="dialog" style={{display: "block"}}>
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5
-                  className="modal-title">{`${selectedEmployee.firstName.toUpperCase()} ${selectedEmployee.lastName.toUpperCase()}`}</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={closeModal}>
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p>Age: {selectedEmployee.age}</p>
-                <p>Date of Joining: {selectedEmployee.dateOfJoining.split("T")[0]}</p>
-                <p>Title: {selectedEmployee.title}</p>
-                <p>Department: {selectedEmployee.department}</p>
-                <p>Employee Type: {selectedEmployee.employeeType}</p>
-                <p>Current Status: {selectedEmployee.currentStatus}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,27 +1,34 @@
-import React, {useState, useEffect} from "react";
-import {useQuery} from "@apollo/client";
-import {GET_EMPLOYEE_BY_ID} from "../GraphQL/Queries";
+import React, { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_EMPLOYEE_BY_ID } from "../GraphQL/Queries";
+import { useParams } from "react-router-dom";
 
-function EmployeeDetails({id}) {
-  console.log("from-EmployeeDetails", id);
-  const {loading, error, data} = useQuery(GET_EMPLOYEE_BY_ID, {
-    variables: {id}
+function EmployeeDetails() {
+  const { id } = useParams();
+  const { loading, error, data } = useQuery(GET_EMPLOYEE_BY_ID, {
+    variables: { id },
   });
 
-  const [employeeDetails, setEmployeeDetails] = useState({});
+  const [employeeDetails, setEmployeeDetails] = useState([]);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.employee) {
+      console.log("employeeData", data);
       const employeeFields = [];
-      for (let field in data) {
-        data.push({
-          label: field,
-          value: data[field]
-        })
+      for (let field in data.employee) {
+        let  value = data.employee[field];
+        if (field === "dateOfJoining") {
+          value = new Date(value).toDateString()
+        }
+        employeeFields.push({
+          label: field.toUpperCase(),
+          value: value.toString().toUpperCase()
+        });
       }
-      setEmployeeDetails(employeeFields)
+      setEmployeeDetails(employeeFields);
     }
-  },[data]);
+  }, [data]);
+
   return (
     <div className="container">
       <div className="row">

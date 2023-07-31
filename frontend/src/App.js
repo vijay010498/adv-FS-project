@@ -1,13 +1,14 @@
 // app.js
 
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import EmployeeDirectory from "./components/EmployeeDirectory";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
 import "./App.css";
 import EmployeeCreate from "./components/EmployeCreate";
+import EmployeeDetails from "./components/EmployeeDetails";
 
 function App() {
   const client = new ApolloClient({
@@ -18,13 +19,13 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Header />
+        <Header/>
         <Routes>
-          <Route path="/" element={<EmployeeDirectory />} />
-          <Route path="/add-employee" element={<EmployeeCreate />} />
-          {/* Add more routes for other pages if needed */}
+          <Route path="/" element={<EmployeeDirectory/>}/>
+          <Route path="/add-employee" element={<EmployeeCreate/>}/>
+          <Route path="/employee/:id" element={<EmployeeDetails/>}/>
         </Routes>
-        <Footer />
+        <Footer/>
       </Router>
     </ApolloProvider>
   );

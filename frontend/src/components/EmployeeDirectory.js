@@ -9,7 +9,13 @@ function EmployeeDirectory() {
   const [newEmployeeCreated, setNewEmployeeCreated] = useState(location.state?.newEmployeeCreated || false);
 
   const [filterOptions, setFilterOptions] = useState({
-    employeeType: ""
+    firstName: "",
+    lastName: "",
+    title: "",
+    department: "",
+    dateOfJoining: "",
+    employeeType: "",
+    currentStatus: 1,
   });
 
   const handleSearch = (options) => {
@@ -26,7 +32,8 @@ function EmployeeDirectory() {
     <main>
       <h1>EMPLOYEE LIST</h1>
       <EmployeeSearch onSearch={handleSearch}/>
-      <EmployeeTable newEmployeeCreated={newEmployeeCreated} onResetNewEmployeeCreated={resetNewEmployeeCreated} filterOptions={filterOptions}/>
+      <EmployeeTable newEmployeeCreated={newEmployeeCreated} onResetNewEmployeeCreated={resetNewEmployeeCreated}
+                     filterOptions={filterOptions}/>
     </main>
   );
 }

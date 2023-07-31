@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_EMPLOYEE_BY_ID } from "../GraphQL/Queries";
-import { useParams } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useQuery} from "@apollo/client";
+import {GET_EMPLOYEE_BY_ID} from "../GraphQL/Queries";
+import {useParams} from "react-router-dom";
 
 function EmployeeDetails() {
-  const { id } = useParams();
-  const { loading, error, data } = useQuery(GET_EMPLOYEE_BY_ID, {
-    variables: { id },
+  const {id} = useParams();
+  const {loading, error, data} = useQuery(GET_EMPLOYEE_BY_ID, {
+    variables: {id},
   });
 
   const [employeeDetails, setEmployeeDetails] = useState([]);
@@ -16,7 +16,10 @@ function EmployeeDetails() {
       console.log("employeeData", data);
       const employeeFields = [];
       for (let field in data.employee) {
-        let  value = data.employee[field];
+        if (field === '__typename') {
+          continue;
+        }
+        let value = data.employee[field];
         if (field === "dateOfJoining") {
           value = new Date(value).toDateString()
         }
@@ -30,20 +33,22 @@ function EmployeeDetails() {
   }, [data]);
 
   return (
-    <div className="container">
-      <div className="row">
-        {employeeDetails.map((field, index) => (
-          <div key={index} className="col-md-4 mb-4">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{field.label}</h5>
-                <p className="card-text">{field.value}</p>
+    <main>
+      <div className="container">
+        <div className="row">
+          {employeeDetails.map((field, index) => (
+            <div key={index} className="col-md-4 mb-4">
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{field.label}</h5>
+                  <p className="card-text">{field.value}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

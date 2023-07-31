@@ -1,7 +1,7 @@
 // Header.js
 
 import { Link, useLocation } from "react-router-dom";
-
+import React from 'react';
 
 function Header() {
   const location = useLocation();

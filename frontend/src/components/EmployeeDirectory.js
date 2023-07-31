@@ -2,6 +2,7 @@ import EmployeeSearch from "./EmployeeSearch";
 import EmployeeTable from "./EmployeeTable";
 import {useLocation} from "react-router-dom";
 import {useState} from "react";
+import React from 'react';
 
 
 function EmployeeDirectory() {

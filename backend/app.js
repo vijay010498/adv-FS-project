@@ -5,8 +5,9 @@ const resolvers = require("./GraphQL/resolvers");
 const bodyParser = require('body-parser');
 // mongo db using mongoose
 const mongoose = require('mongoose');
-// wgwMFonvzgLhPAWr
-const MONGO_URL = 'mongodb+srv://vijay010498:wgwMFonvzgLhPAWr@cluster0.x4lkojc.mongodb.net/?retryWrites=true&w=majority';
+const DB_USER = 'rideOff-auth';
+const DB_PASS = 'vlYP10GEUVqo8AXM';
+const DB_ENDPOINT = `mongodb+srv://${DB_USER}:${DB_PASS}@rideoff-auth.xhav50x.mongodb.net/?retryWrites=true&w=majority`;
 
 const app = express();
 const apolloServer = new ApolloServer({
@@ -20,7 +21,7 @@ app.use(bodyParser.json());
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
   try {
-    await mongoose.connect(MONGO_URL, {
+    await mongoose.connect(DB_ENDPOINT, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

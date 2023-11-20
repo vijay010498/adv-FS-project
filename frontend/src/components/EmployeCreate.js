@@ -14,7 +14,6 @@ function EmployeeCreate() {
   const [title, setTitle] = useState("");
   const [department, setDepartment] = useState("");
   const [employeeType, setEmployeeType] = useState("");
-  const [currentStatus, setCurrentStatus] = useState("");
 
   const [createEmployee, {error}] = useMutation(CREATE_EMPLOYEE_MUTATION);
 
@@ -62,7 +61,6 @@ function EmployeeCreate() {
       setDepartment("");
       setEmployeeType("");
 
-      // navigate to main router and refresh the employee list
       navigate("/", {
         state: {
           newEmployeeCreated: true

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-import {useQuery} from "@apollo/client";
+import {useMutation, useQuery} from "@apollo/client";
 import {GET_EMPLOYEE_LIST_QUERY} from "../GraphQL/Queries";
 import {useNavigate} from "react-router-dom";
+import {DELETE_EMPLOYEE_MUTATION} from "../GraphQL/Mutators";
 
 function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOptions}) {
 
@@ -23,7 +24,6 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOpt
 
   useEffect(() => {
     if (newEmployeeCreated) {
-      // Refetch data
       refetch().then(() => {
         onResetNewEmployeeCreated();
       });
@@ -44,11 +44,22 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOpt
     navigate(`/employee/${employee.id}`);
   };
 
+  const [deleteEmployeeMutation] = useMutation(DELETE_EMPLOYEE_MUTATION);
+  const handleDelete = (employeeId) => {
+    deleteEmployeeMutation({
+      variables: { id: employeeId }
+    }).then(() => {
+      refetch();
+    }).catch((error) => {
+      console.error("Error deleting employee:", error);
+    });
+  };
+
 
   const rows =
     employeeList.length > 0 ? (
       employeeList.map((employee) => (
-        <tr key={employee.id} onClick={() => handleEmployeeClick(employee)}>
+        <tr key={employee.id}>
           <td>{employee.firstName}</td>
           <td>{employee.lastName}</td>
           <td>{employee.age}</td>
@@ -57,6 +68,12 @@ function EmployeeTable({newEmployeeCreated, onResetNewEmployeeCreated, filterOpt
           <td>{employee.department}</td>
           <td>{employee.employeeType}</td>
           <td>{employee.currentStatus === 1 ? "working" : "retired"}</td>
+          <td>
+            <button onClick={() => handleDelete(employee.id)}>Delete</button>
+          </td>
+          <td>
+            <button onClick={() => handleEmployeeClick(employee)}>EDIT</button>
+          </td>
         </tr>
       ))
     ) : (

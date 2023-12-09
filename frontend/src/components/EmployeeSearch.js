@@ -98,7 +98,7 @@ function EmployeeSearch({onSearch}) {
                   value={currentStatus}
                   onChange={(e) => setCurrentStatus(parseInt(e.target.value))}>
             <option value="1">Working</option>
-            <option value="2">Retired</option>
+            <option value="0">Retired</option>
           </select>
         </div>
         <div className="col-3">

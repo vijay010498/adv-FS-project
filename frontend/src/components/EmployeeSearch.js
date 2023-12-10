@@ -1,7 +1,7 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import React from 'react';
 
-function EmployeeSearch({onSearch}) {
+function EmployeeSearch({onSearch, onSetOnlyRet}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [title, setTitle] = useState("");
@@ -9,6 +9,9 @@ function EmployeeSearch({onSearch}) {
   const [dateOfJoining, setDateOfJoining] = useState("");
   const [currentStatus, setCurrentStatus] = useState(1);
   const [employeeType, setEmployeeType] = useState("");
+  const [onlyUpcomingRetirementEmployees, setOnlyUpcomingRetirementEmployees] = useState(false);
+
+
 
 
   const handleSearchClick = () => {
@@ -19,9 +22,19 @@ function EmployeeSearch({onSearch}) {
       department,
       dateOfJoining,
       currentStatus,
-      employeeType
+      employeeType,
     })
+
   }
+
+
+  useEffect(() => {
+    onSetOnlyRet(onlyUpcomingRetirementEmployees);
+  }, [onlyUpcomingRetirementEmployees]);
+  const handleCheckedChanged = (val) => {
+    setOnlyUpcomingRetirementEmployees(val);
+  }
+
 
   return (
     <form className="form-horizontal mt-3">
@@ -56,27 +69,29 @@ function EmployeeSearch({onSearch}) {
           <label className="form-label" htmlFor="title">
             Title
           </label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            value={title}
-            placeholder=" Search for title"
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <select className="form-select"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}>
+            <option value="">Select Title</option>
+            <option value="Employee">Employee</option>
+            <option value="Manager">Manager</option>
+            <option value="Director">Director</option>
+            <option value="VP">VP</option>
+          </select>
         </div>
         <div className="col-3">
           <label className="form-label" htmlFor="department">
             Department
           </label>
-          <input
-            type="text"
-            className="form-control"
-            id="department"
-            value={department}
-            placeholder=" Search for department"
-            onChange={(e) => setDepartment(e.target.value)}
-          />
+          <select className="form-select"
+                  value={department}
+                  onChange={(e) => setDepartment(e.target.value)}>
+            <option value="">Select Department</option>
+            <option value="IT">IT</option>
+            <option value="Marketing">Marketing</option>
+            <option value="HR">HR</option>
+            <option value="Engineering">Engineering</option>
+          </select>
         </div>
         <div className="col-3">
           <label className="form-label" htmlFor="dateofjoining">
@@ -112,6 +127,20 @@ function EmployeeSearch({onSearch}) {
             <option value="Contract">Contract</option>
             <option value="Seasonal">Seasonal</option>
           </select>
+        </div>
+        <div className="col-3">
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="onlyUpcomingRetirementEmployees"
+              checked={onlyUpcomingRetirementEmployees}
+              onChange={(e) => handleCheckedChanged(e.target.checked)}
+            />
+            <label className="form-check-label" htmlFor="onlyUpcomingRetirementEmployees">
+              Include only upcoming retirement employees
+            </label>
+          </div>
         </div>
         <div id="search-btn" className="col-4">
           <label className="form-label">&nbsp;</label>

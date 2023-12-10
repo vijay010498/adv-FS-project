@@ -19,11 +19,16 @@ function EmployeeDirectory() {
     currentStatus: 1,
   });
 
+  const [onlyUpcomingRetirement, setOnlyUpcomingRetirement] = useState(false);
+
+
   const handleSearch = (options) => {
     setFilterOptions(options);
-    console.log("search-clicked", options);
   };
 
+  const handleSetOnlyUpcoming = (val) => {
+    setOnlyUpcomingRetirement(val);
+  }
   const resetNewEmployeeCreated = () => {
     setNewEmployeeCreated(false);
   };
@@ -32,9 +37,9 @@ function EmployeeDirectory() {
   return (
     <main>
       <h1>EMPLOYEE LIST</h1>
-      <EmployeeSearch onSearch={handleSearch}/>
+      <EmployeeSearch onSearch={handleSearch} onSetOnlyRet={handleSetOnlyUpcoming}/>
       <EmployeeTable newEmployeeCreated={newEmployeeCreated} onResetNewEmployeeCreated={resetNewEmployeeCreated}
-                     filterOptions={filterOptions}/>
+                     filterOptions={filterOptions} onlyUpcomingRetirement={onlyUpcomingRetirement}/>
     </main>
   );
 }

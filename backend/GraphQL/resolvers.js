@@ -97,6 +97,10 @@ const resolvers = {
         throw new Error('No Employee Found');
       }
 
+      if (employee.currentStatus) {
+        return new Error("CAN’T DELETE EMPLOYEE STATUS ACTIVE");
+      }
+
       await Employee.findByIdAndDelete(id);
 
       return employee;

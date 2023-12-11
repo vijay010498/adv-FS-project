@@ -33,7 +33,7 @@ const resolvers = {
           query.employeeType = {$regex: new RegExp(filterOptions.employeeType, "i")};
         }
 
-        if (filterOptions.currentStatus) {
+        if (filterOptions.currentStatus === 0 || filterOptions.currentStatus === 1) {
           query.currentStatus = filterOptions.currentStatus;
         }
       }

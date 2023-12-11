@@ -7,7 +7,7 @@ function EmployeeSearch({onSearch, onSetOnlyRet}) {
   const [title, setTitle] = useState("");
   const [department, setDepartment] = useState("");
   const [dateOfJoining, setDateOfJoining] = useState("");
-  const [currentStatus, setCurrentStatus] = useState(1);
+  const [currentStatus, setCurrentStatus] = useState("3");
   const [employeeType, setEmployeeType] = useState("");
   const [onlyUpcomingRetirementEmployees, setOnlyUpcomingRetirementEmployees] = useState(false);
 
@@ -112,8 +112,9 @@ function EmployeeSearch({onSearch, onSetOnlyRet}) {
           <select className="form-select"
                   value={currentStatus}
                   onChange={(e) => setCurrentStatus(parseInt(e.target.value))}>
-            <option value="1">Working</option>
+            <option value="3">All</option>
             <option value="0">Retired</option>
+            <option value="1">Working</option>
           </select>
         </div>
         <div className="col-3">

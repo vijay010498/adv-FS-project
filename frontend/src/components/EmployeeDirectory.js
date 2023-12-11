@@ -16,7 +16,7 @@ function EmployeeDirectory() {
     department: "",
     dateOfJoining: "",
     employeeType: "",
-    currentStatus: 1,
+    currentStatus: null,
   });
 
   const [onlyUpcomingRetirement, setOnlyUpcomingRetirement] = useState(false);
